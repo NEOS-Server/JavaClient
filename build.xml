@@ -43,8 +43,15 @@
     <jar destfile="${dist}/bin/NeosClient.jar" basedir="${build}">
       <metainf file="LICENSE"/>
       <manifest>
-        <attribute name="Main-Class" value="client.NeosClient"/>
+        <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+        <attribute name="Rsrc-Main-Class" value="client.NeosClient"/>
+        <attribute name="Class-Path" value="."/>
+        <attribute name="Rsrc-Class-Path" value="./ ws-commons-util-1.0.2.jar xmlrpc-client-3.1.3.jar xmlrpc-common-3.1.3.jar"/>
       </manifest>
+      <zipfileset src="jar-in-jar-loader.zip"/>
+      <fileset file="${lib}/ws-commons-util-1.0.2.jar"/>
+      <fileset file="${lib}/xmlrpc-client-3.1.3.jar"/>
+      <fileset file="${lib}/xmlrpc-common-3.1.3.jar"/>
     </jar>
   </target>
 
