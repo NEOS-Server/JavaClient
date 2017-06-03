@@ -26,6 +26,8 @@
     <conf name="default"/>
   </configurations>
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.apache.ws.commons.util/ws-commons-util -->
+    <dependency org="org.apache.ws.commons.util" name="ws-commons-util" rev="1.0.2"/>
     <!-- https://mvnrepository.com/artifact/org.apache.xmlrpc/xmlrpc-client -->
     <dependency org="org.apache.xmlrpc" name="xmlrpc-client" rev="3.1.3"/>
     <!-- https://mvnrepository.com/artifact/org.apache.xmlrpc/xmlrpc-common -->
