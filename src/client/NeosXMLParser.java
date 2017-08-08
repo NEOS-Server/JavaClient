@@ -67,6 +67,7 @@ public class NeosXMLParser {
 	public String inputMethod;
 	public String abs;
 	public InputItem[] inputItems;
+	private JTextField emailField;
 
 	/* For testing only */
 	public static void main(String[] arguments) {
@@ -220,6 +221,45 @@ public class NeosXMLParser {
 			solverPane.add(outerPanel, c);
 		}
 
+		// Email section
+		JPanel outerPanel = new JPanel(new GridBagLayout());
+		TitledBorder title = BorderFactory.createTitledBorder("Email");
+		title.setTitleFont(f);
+		outerPanel.setBorder(title);
+		GridBagConstraints oc = new GridBagConstraints();
+		outerPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+		oc.gridx = 0; // vertical placement of panels
+		oc.anchor = GridBagConstraints.LINE_START;
+
+		JEditorPane helpText = new JEditorPane();
+		JScrollPane helpScroll = new JScrollPane(helpText);
+		helpScroll.setBorder(null);
+		helpText.setContentType("text/html");
+		helpText.setText("<html>An email address is required for CPLEX submissions.</html>");
+		
+		helpText.setCaretPosition(0);
+
+		helpText.setBackground((new JLabel()).getBackground());
+		helpText.setEditable(false);
+		helpText.setPreferredSize(new Dimension(2, 16));
+		oc.insets = new Insets(5,5,5,5);
+		oc.weightx = 1.0f;
+		oc.weighty = 1.0f;
+		oc.fill = GridBagConstraints.HORIZONTAL;
+		outerPanel.add(helpScroll, oc);
+
+		oc.weighty = 0.0f;
+		oc.fill = GridBagConstraints.HORIZONTAL;
+		oc.weightx = 0.0f;
+		JPanel emailPanel = new JPanel();
+		emailPanel.setPreferredSize(new Dimension(2, 32));
+		emailField = new JTextField(25);
+		emailPanel.add(emailField);
+		outerPanel.add(emailPanel, oc);
+		solverPane.add(outerPanel, c);
+
+		// Finally....
 		JButton submitButton = new JButton("submit to NEOS");
 		submitButton.setActionCommand("Submit");
 		submitButton.addActionListener(submitHandler);
@@ -242,8 +282,12 @@ public class NeosXMLParser {
 				+ "</inputMethod>\n";
 		String footer = "</document>";
 
-		for (int i = 0; i < inputItems.length; i++)
+		for (int i = 0; i < inputItems.length; i++) {
 			submission += inputItems[i].writeItem();
+		}
+		if (emailField.getText().length() > 0) {
+			submission += "<email>" + emailField.getText() + "</email>";
+		}
 		System.out.println(header + submission + footer);
 		return header + submission + footer;
 	}
