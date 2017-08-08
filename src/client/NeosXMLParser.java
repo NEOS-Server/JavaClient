@@ -391,7 +391,7 @@ abstract class InputItem {
 
 	public String writeNode(String token, String value) {
 		if (value.compareTo("") != 0)
-			return "<" + token + ">\n<![CDATA[\n" + value + "\n]]>\n</" + token
+			return "<" + token + "><![CDATA[" + value + "\n]]></" + token
 					+ ">\n";
 		else
 			return "";
@@ -433,9 +433,11 @@ class FileItem extends InputItem implements ActionListener {
 				FileReader fr = new FileReader(fileText.getText());
 
 				BufferedReader xmlreader = new BufferedReader(fr);
+				Boolean first = true;
 				while ((buf = xmlreader.readLine()) != null) {
-					fileContents += buf + "\n";
-
+					if (first == false) fileContents += "\n";
+					fileContents += buf;
+					first = false;
 				}
 
 				return writeNode(token, fileContents);
